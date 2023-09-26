@@ -1,0 +1,159 @@
+	<div class="col-lg-12">
+		<div class="container-fluid" id="table-container">
+			<div class="container">
+				<div class="row">
+					<div class="d-flex">
+						<span><%= link_to "Create Employee" , new_employee_path ,class:"btn btn-primary mt-2" %></span>
+						<div class="dropdowm">
+							<button class="btn btn-secondary dropdown-toggle mx-2 mt-2" tupe="button" id="countryDropdoenButton" data-bs-toggle = "dropdown" aria-expanded="false">
+								Country
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="countryDropdownButton" id="countryMenu">
+								<li><a class="dropdown-item" href="#" data-country="All">All</a></li>
+								<% @countries.each do |country| %>
+								<li><a class="dropdown-item country-filter" href="#" data-country="<%= country %>"><%= country %></a></li>
+								<% end %>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="col-lg-12 rounded mb-4" >
+					<h3 class="text-center mx-auto" id="page-heading">Employee Details  </h3>
+				</div>
+			</div>
+
+			<div class="row">
+				<% @employees.each do |employee| %>
+				<div class="col-sm-4  mb-3">
+					<div class="card">
+						<div class="card-body">
+							<p><input class="form-check-input check_box_employee" type="checkbox" id="checkbox-employee_<%= employee.id%>"  value="" aria-label="..." />
+							</p>
+							<p> Emp id:<span><%= employee.id%></span></p>
+							<p> Name:<span><%= employee.full_name%></span></p>
+							<p>Phone Number:<span><%= employee.phone_number %> </span></p>
+							<p>Country:<span data-country="<%= employee.country %>"><%= employee.country %></span></p>
+
+							<p>Address:<span><%= employee.address %></span></p>
+							<div class=" col-lg-8 d-flex">
+								<p><%= link_to 'View', employee ,class:"btn btn-primary mx-2" %></p>
+
+								<!-- Button trigger modal -->
+								<p><button type="button" class="btn btn-primary edit_employee_btn " data-bs-toggle="modal" data-bs-target="#editModal_<%= employee.id %>">
+									Edit
+								</button></p>
+
+								<!-- Modal -->
+								<div class="modal fade" id="editModal_<%= employee.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+											</div>
+											<div class="modal-body" id="edit_employee_page">
+
+												<%= form_with(model: employee, url: employee_path(employee), method: :patch) do |form| %>
+												<div class="container bg-light">
+													<div class="row">
+														<!-- Name input -->
+														<div class="col-lg-6">
+															<div class="form-outline mb-4 mt-3">
+																<%= form.label :first_name ,class:"form-label"  %>
+																<%= form.text_field :first_name ,class:"form-control" %>
+															</div>
+														</div>
+
+														<!-- Email input -->
+														<div class="col-lg-6">
+															<div class="form-outline mb-4 mt-3">
+																<%= form.label :last_name, class:"form-label" %>
+																<%= form.text_field :last_name ,class:"form-control"%>
+															</div>
+														</div>
+													</div>
+
+													<div class="from-outline mb-4">
+														<%= form.label :email ,class:"form-label" %>
+														<%= form.text_field :email ,class:"form-control" %> 
+													</div>
+
+													<div class="from-outline mb-4">
+														<%= form.label :phone_number ,class:"form-label" %>
+														<%= form.text_field :phone_number ,class:"form-control" %>
+													</div>
+													<div class="from-outline mb-4">
+														<%= form.label :country ,class:"form-label" %>
+														<%= form.country_select :country, { prompt:'Select country'} ,{class:"form-select form-select-lg"} %>
+
+													</div>
+
+													<div class="from-outline mb-4">
+														<%= form.label :address ,class:"form-label" %>
+														<%= form.text_field :address ,class:"form-control" %>
+													</div>
+
+													<div class="from-outline mb-4">
+														<%= form.label :employee_id ,"Employee_id" ,class:"form-label" %>
+														<%= form.text_field :employee_id ,class:"form-control" %>
+													</div>
+												</div>  
+												<div class="modal-footer d-flex">
+													<p><%= form.submit class:"btn btn-primary employee_update" %></p>
+													<p><%= link_to "Back", employees_path, class:"btn btn btn-primary" %></p>
+												</div>
+												<% end %>  
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+  $(document).ready(function(){
+    $('.edit_employee_btn').hide();
+    $('.card').hide();
+
+    $('.check_box_employee').change(function(){
+      if ($(this).is(':checked')) {
+        $('.check_box_employee').not(this).prop('checked', false);
+        $('.edit_employee_btn').hide();
+        var EmployeeCheckBoxId = $(this).attr('id');
+        $(this).closest('.card').find('.edit_employee_btn').show();
+      }
+    });
+
+    $('.employee_update').click(function(){
+      location.reload();
+    });
+
+    $('.country-filter').click(function() {
+      var selectedCountry = $(this).data('country');
+      $('.card').hide();
+      
+      if (selectedCountry === "All") {
+        $('.card').show();
+      } else {
+        $('.card').hide();
+        $('span[data-country="' + selectedCountry + '"]').closest('.card').show();
+      }
+    });
+
+    // Show all employees when "All" is selected by default
+    $('.country-filter[data-country="All"]').trigger('click');
+  });
+
+
+</script>

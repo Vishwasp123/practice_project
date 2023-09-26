@@ -1,0 +1,52 @@
+
+  <%= form_with(model: @employee) do |form| %>
+  <div class="container bg-light">
+    <div class="row">
+      <!-- Name input -->
+      <div class="col-lg-6">
+        <div class="form-outline mb-4 mt-3">
+          <%= form.label :first_name ,class:"form-label"  %>
+          <%= form.text_field :first_name ,class:"form-control" %>
+        </div>
+      </div>
+
+      <!-- Email input -->
+      <div class="col-lg-6">
+        <div class="form-outline mb-4 mt-3">
+          <%= form.label :last_name, class:"form-label" %>
+          <%= form.text_field :last_name ,class:"form-control"%>
+        </div>
+      </div>
+    </div>
+
+    <div class="from-outline mb-4">
+      <%= form.label :email ,class:"form-label" %>
+      <%= form.text_field :email ,class:"form-control" %> 
+    </div>
+
+    <div class="from-outline mb-4">
+      <%= form.label :phone_number ,class:"form-label" %>
+      <%= form.text_field :phone_number ,class:"form-control" %>
+    </div>
+
+    <div class="from-outline mb-4">
+          <%= form.label :country ,class:"form-label" %>
+          <%= form.country_select :country, { prompt:'Select country'} ,{class:"form-select form-select-lg"} %>
+
+        </div>
+
+    <div class="from-outline mb-4">
+      <%= form.label :address ,class:"form-label" %>
+      <%= form.text_field :address ,class:"form-control" %>
+    </div>
+
+    <div class="from-outline mb-4">
+      <%= form.label :employee_id ,"Employee_id" ,class:"form-label" %>
+      <%= form.text_field :employee_id ,class:"form-control" %>
+    </div>
+  </div>  
+  <div class="modal-footer d-flex">
+    <p><%= form.submit class:"btn btn-primary employee_update" %></p>
+    <p><%= link_to "Back", employees_path, class:"btn btn btn-primary" %></p>
+  </div>
+  <% end %>  

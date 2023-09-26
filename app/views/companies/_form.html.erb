@@ -1,0 +1,39 @@
+<form>
+	<%= form_with model: @company do |form| %>
+	<!-- 2 column grid layout with text inputs for the first and last names -->
+	<div class=" mb-4">
+		<div class="col">
+			<div class="form-outline">
+
+				<%= form.text_field :name , class:"form-control"%>
+				<%= form.label :name,"Name"  ,class:"form-label"%>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- Text input -->
+	<div class="form-outline mb-4">
+		<%= form.label :address ,class:"form-label" %>
+		<%= form.text_field :address ,"Address" ,class:"form-control" %>
+	</div>
+
+	<!-- Text input -->
+	<div class="form-outline mb-4">
+		<%= form.label :contact_number,class:"form-label" %>
+		<%= form.text_field :contact_no,class:"form-control"  %>
+	</div>
+
+	<!-- Email input -->
+	<div class="form-outline mb-4">
+		<%= form.label :Email,class:"form-label" %>
+		<%= form.text_field :email ,class:"form-control" %>
+	</div>
+
+	
+	<!-- Submit button -->
+	<%= form.submit class:"btn btn-primary btn-block mb-4" %>
+	<% end %>
+	
+</form>
+

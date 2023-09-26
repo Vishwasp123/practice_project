@@ -1,0 +1,8 @@
+<%= search_form_for @q , url: :employees do |form| %>
+
+  # Attributes may be chained. Search multiple attributes for one value...
+  <%= form.label :first_name_or_last_name_or_email_or_phone_number_or_address_employee_id_cont ,'Search', class:"search_field"  %>
+  <%= form.search_field :first_name_or_last_name_or_email_or_phone_number_or_address_employee_id_cont %>
+
+  <%= form.submit %>
+<% end %>
